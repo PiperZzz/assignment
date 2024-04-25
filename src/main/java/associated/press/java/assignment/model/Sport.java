@@ -8,12 +8,15 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.CascadeType;
-
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "sports")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Sport {
 
     @Id

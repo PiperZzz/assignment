@@ -14,12 +14,15 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.JoinColumn;
-
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "players") //JPA can infer the name, here is just for good practices.
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Player {
     
     @Id
