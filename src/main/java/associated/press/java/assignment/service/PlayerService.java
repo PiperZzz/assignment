@@ -28,10 +28,6 @@ public class PlayerService {
     @Autowired
     private SportsRepository sportsRepository;
 
-    public List<Player> getPlayersByGenderLevelAndAge(String gender, int level, int age) {
-        return playersRepository.findByGenderAndLevelAndAge(gender, level, age);
-    }
-
     public List<PlayerDTO> getPlayersWithNoSports() {
         List<Player> players = playersRepository.findPlayersWithNoSports();
 
