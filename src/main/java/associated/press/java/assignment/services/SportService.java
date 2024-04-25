@@ -17,4 +17,9 @@ public class SportService {
     public List<Sport> getSportsWithMultiplePlayers() {
         return sportsRepository.findSportsWithMultiplePlayers();
     }
+
+    public List<Sport> getSportsWithNoPlayers() {
+        return sportsRepository.findSportsWithNoPlayers();
+    }
+
 }
