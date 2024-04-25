@@ -1,6 +1,7 @@
 package associated.press.java.assignment.service;
 
 import associated.press.java.assignment.dao.SportsRepository;
+import associated.press.java.assignment.dao.PlayersRepository;
 import associated.press.java.assignment.model.Sport;
 import associated.press.java.assignment.util.ModelMapper;
 import associated.press.java.assignment.dto.SportDTO;
@@ -18,6 +19,9 @@ public class SportService {
     
     @Autowired
     private SportsRepository sportsRepository;
+
+    @Autowired
+    private PlayersRepository playersRepository;
 
     public List<Sport> getSportsWithMultiplePlayers() {
         return sportsRepository.findSportsWithMultiplePlayers();
@@ -40,6 +44,9 @@ public class SportService {
     public void deleteSport(String name) {
         Sport sport = sportsRepository.findByName(name)
             .orElseThrow(() -> new ResourceNotFoundException("Sport not found with name: " + name));
+        
+        sport.getPlayers().forEach(player -> player.getSports().remove(sport));
+        
         sportsRepository.delete(sport);
     }
 }
