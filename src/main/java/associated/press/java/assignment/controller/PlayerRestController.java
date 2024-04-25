@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import org.springframework.data.domain.Page;
 
 @RestController
 @RequestMapping("/player")
@@ -43,5 +46,14 @@ public class PlayerRestController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error processing request: " + e.getMessage());
         }
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<PlayerDTO>> getPlayers(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String sportName) {
+        Page<PlayerDTO> players = playerService.getPlayersFilteredBySport(page, size, sportName);
+        return ResponseEntity.ok(players);
     }
 }
