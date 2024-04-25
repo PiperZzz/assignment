@@ -35,14 +35,14 @@ public class SportRestController {
             }
             return ResponseEntity.ok(sports);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error processing request: " + e.getMessage());
+            return ResponseEntity.internalServerError().body("Error processing request: " + e.getMessage());
         }
     }
 
     @DeleteMapping("/{name}")
     public ResponseEntity<?> deleteSport(@PathVariable String name) {
         if (name == null || name.trim().isEmpty()) {
-            return ResponseEntity.badRequest().body("Invalid RequestParam");
+            return ResponseEntity.badRequest().body("Invalid Path");
         }
 
         try {
