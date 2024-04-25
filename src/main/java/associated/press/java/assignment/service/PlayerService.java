@@ -41,12 +41,12 @@ public class PlayerService {
         Player player = playersRepository.findById(email)
             .orElseThrow(() -> new ResourceNotFoundException("Player not found with email: " + email));
         
-        Set<Sport> sports = sportsNames.stream()
-            .map(name -> sportsRepository.findById(name)
-                .orElseThrow(() -> new ResourceNotFoundException("Sport not found with name: " + name)))
+        Set<Sport> sports = sportsNames.stream().map(name -> sportsRepository.findById(name)
+            .orElseThrow(() -> new ResourceNotFoundException("Sport not found with name: " + name)))
             .collect(Collectors.toSet());
         
         player.setSports(sports);
+        
         playersRepository.save(player);
         
         return ModelMapper.mapPlayerToPlayerDTO(player);
@@ -57,11 +57,12 @@ public class PlayerService {
         
         Page<Player> players;
 
-        if (sportName != null) {
+        if (sportName != null && !sportName.isEmpty()) {
             players = playersRepository.findBySportsName(sportName, pageable);
         } else {
             players = playersRepository.findAll(pageable);
         }
+
         return players.map(ModelMapper::mapPlayerToPlayerDTO);
     }
 }
