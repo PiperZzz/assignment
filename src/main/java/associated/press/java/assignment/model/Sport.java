@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.CascadeType;
 
 import lombok.Data;
 
@@ -18,6 +19,6 @@ public class Sport {
     @Id
     private String name;
 
-    @ManyToMany(mappedBy = "sports")
+    @ManyToMany(mappedBy = "sports", cascade = CascadeType.REMOVE)
     private Set<Player> players = new HashSet<>();
 }
