@@ -24,6 +24,10 @@ public class SportRestController {
 
     @GetMapping("/search")
     public ResponseEntity<?> getSportsWithPlayersByNames(@RequestParam List<String> names) {
+        if (names == null || names.isEmpty() || names.stream().anyMatch(String::isEmpty)) {
+            return ResponseEntity.badRequest().body("Invalid RequestParam");
+        }
+
         try {
             List<SportDTO> sports = sportService.getSportsWithPlayersByNames(names);
             if (sports.isEmpty()) {
@@ -37,6 +41,10 @@ public class SportRestController {
 
     @DeleteMapping("/{name}")
     public ResponseEntity<?> deleteSport(@PathVariable String name) {
+        if (name == null || name.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("Invalid RequestParam");
+        }
+
         try {
             sportService.deleteSport(name);
             return ResponseEntity.ok().build();
