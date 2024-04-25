@@ -14,4 +14,7 @@ public interface SportsRepository extends JpaRepository<Sport, String>{
 
     @Query("SELECT s FROM Sport s WHERE s.players IS EMPTY")
     List<Sport> findSportsWithNoPlayers();
+
+    @Query("SELECT s FROM Sport s JOIN FETCH s.players WHERE s.name IN :names")
+    List<Sport> findSportsWithPlayersByName(List<String> names);
 }

@@ -23,7 +23,7 @@ import lombok.Data;
 public class Player {
     
     @Id
-    private String eamil;
+    private String email;
     
     @Column(nullable = false)
     private int level;
