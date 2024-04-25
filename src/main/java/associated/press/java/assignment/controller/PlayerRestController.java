@@ -38,22 +38,36 @@ public class PlayerRestController {
 
     @PutMapping("/{email}/sports")
     public ResponseEntity<?> updatePlayerSports(@PathVariable String email, @RequestBody List<String> sportsNames) {
+        if (email == null || email.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body("Invalid Path");
+        }
+
+        if (sportsNames == null || sportsNames.isEmpty() || sportsNames.contains(null) || sportsNames.contains("")) {
+            return ResponseEntity.badRequest().body("Invalid RequestBody");
+        }
+
         try {
             PlayerDTO updatedPlayer = playerService.updatePlayerSports(email, sportsNames);
             return ResponseEntity.ok(updatedPlayer);
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.notFound().build();
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error processing request: " + e.getMessage());
+            return ResponseEntity.internalServerError().body("Error processing request: " + e.getMessage());
         }
     }
 
     @GetMapping
-    public ResponseEntity<Page<PlayerDTO>> getPlayers(
+    public ResponseEntity<?> getPlayers(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) String sportName) {
+        
+        if (page < 0 || size <= 0) {
+            return ResponseEntity.badRequest().body("Invalid Page or Size");
+        }        
+        
         Page<PlayerDTO> players = playerService.getPlayersFilteredBySport(page, size, sportName);
+        
         return ResponseEntity.ok(players);
     }
 }
