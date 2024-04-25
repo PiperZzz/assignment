@@ -1,4 +1,4 @@
-package associated.press.java.assignment.services;
+package associated.press.java.assignment.service;
 
 import associated.press.java.assignment.dao.SportsRepository;
 import associated.press.java.assignment.model.Sport;

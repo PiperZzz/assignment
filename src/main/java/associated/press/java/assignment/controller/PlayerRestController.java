@@ -1,10 +1,9 @@
-package associated.press.java.assignment.controllers;
+package associated.press.java.assignment.controller;
 
 import associated.press.java.assignment.dto.PlayerDTO;
+import associated.press.java.assignment.service.PlayerService;
 
 import java.util.List;
-
-import associated.press.java.assignment.services.PlayerService;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;

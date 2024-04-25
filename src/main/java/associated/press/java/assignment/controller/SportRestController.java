@@ -1,10 +1,9 @@
-package associated.press.java.assignment.controllers;
+package associated.press.java.assignment.controller;
 
 import associated.press.java.assignment.dto.SportDTO;
+import associated.press.java.assignment.service.SportService;
 
 import java.util.List;
-
-import associated.press.java.assignment.services.SportService;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.beans.factory.annotation.Autowired;
