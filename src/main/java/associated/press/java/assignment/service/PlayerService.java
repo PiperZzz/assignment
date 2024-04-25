@@ -14,6 +14,9 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -51,5 +54,18 @@ public class PlayerService {
         playersRepository.save(player);
         
         return ModelMapper.mapPlayerToPlayerDTO(player);
+    }
+
+    public Page<PlayerDTO> getPlayersFilteredBySport(int page, int size, String sportName) {
+        Pageable pageable = PageRequest.of(page, size);
+        
+        Page<Player> players;
+
+        if (sportName != null) {
+            players = playersRepository.findBySportsName(sportName, pageable);
+        } else {
+            players = playersRepository.findAll(pageable);
+        }
+        return players.map(ModelMapper::mapPlayerToPlayerDTO);
     }
 }
