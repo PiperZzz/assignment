@@ -27,16 +27,7 @@ public class SportsRepositoryTests {
 
     @Test
     public void testFindSportsWithMultiplePlayers() {
-        Sport soccer = new Sport("Soccer", Collections.emptySet());
-        Player player1 = new Player("player1@example.com", 5, 20, Gender.MALE, new HashSet<> ());
-        Player player2 = new Player("player2@example.com", 6, 22, Gender.FEMALE, new HashSet<> ());
-        soccer.getPlayers().add(player1);
-        soccer.getPlayers().add(player2);
-        entityManager.persist(soccer);
-        entityManager.persist(player1);
-        entityManager.persist(player2);
-        entityManager.flush();
-
+        Sport soccer = createSportWithPlayers("Soccer", 2);
         List<Sport> sports = sportsRepository.findSportsWithMultiplePlayers();
         assertThat(sports).containsExactly(soccer);
     }
@@ -46,23 +37,48 @@ public class SportsRepositoryTests {
         Sport tennis = new Sport("Tennis", Collections.emptySet());
         entityManager.persist(tennis);
         entityManager.flush();
-
         List<Sport> sports = sportsRepository.findSportsWithNoPlayers();
         assertThat(sports).containsExactly(tennis);
     }
 
     @Test
     public void testFindSportsWithPlayersByName() {
-        Sport basketball = new Sport("Basketball", Collections.emptySet());
-        Player player = new Player("player3@example.com", 7, 30, Gender.MALE, new HashSet<> ());
-        basketball.getPlayers().add(player);
-        entityManager.persist(basketball);
-        entityManager.persist(player);
-        entityManager.flush();
-
+        Sport basketball = createSportWithPlayers("Basketball", 1);
         List<String> names = Arrays.asList("Basketball");
         List<Sport> sports = sportsRepository.findSportsWithPlayersByName(names);
         assertThat(sports).hasSize(1);
         assertThat(sports.get(0)).isEqualTo(basketball);
     }
+
+    @Test
+    public void testFindSportsWithMultiplePlayers_NoSports() {
+        List<Sport> sports = sportsRepository.findSportsWithMultiplePlayers();
+        assertThat(sports).isEmpty();
+    }
+
+    @Test
+    public void testFindSportsWithNoPlayers_NoSports() {
+        List<Sport> sports = sportsRepository.findSportsWithNoPlayers();
+        assertThat(sports).isEmpty();
+    }
+
+    @Test
+    public void testFindSportsWithPlayersByName_NoSports() {
+        List<String> names = Arrays.asList("NonexistentSport");
+        List<Sport> sports = sportsRepository.findSportsWithPlayersByName(names);
+        assertThat(sports).isEmpty();
+    }
+
+    private Sport createSportWithPlayers(String sportName, int playerCount) {
+        Sport sport = new Sport(sportName, new HashSet<>());
+        entityManager.persist(sport);
+        entityManager.flush();
+        for (int i = 0; i < playerCount; i++) {
+            Player player = new Player("player" + (i + 1) + "@example.com", 5, 20, Gender.MALE, new HashSet<>());
+            player.getSports().add(sport);
+            entityManager.persist(player);
+        }
+        return sport;
+    }
+    
 }
