@@ -1,6 +1,7 @@
 package associated.press.java.assignment.dao;
 
 import associated.press.java.assignment.model.Player;
+import associated.press.java.assignment.enums.Gender;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +15,7 @@ public interface PlayersRepository extends JpaRepository<Player, String>{
 
     Optional<Player> findByEmail(String email);
     
-    List<Player> findByGenderAndLevelAndAge(String gender, int level, int age);
+    List<Player> findByGenderAndLevelAndAge(Gender gender, int level, int age);
 
     @Query("SELECT p FROM Player p WHERE p.sports IS EMPTY")
     List<Player> findPlayersWithNoSports();
