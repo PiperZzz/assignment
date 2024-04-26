@@ -12,6 +12,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import java.util.List;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
@@ -26,8 +28,8 @@ public class SportsRepositoryTests {
     @Test
     public void testFindSportsWithMultiplePlayers() {
         Sport soccer = new Sport("Soccer", Collections.emptySet());
-        Player player1 = new Player("player1@example.com", 5, 20, Gender.MALE, Collections.emptySet());
-        Player player2 = new Player("player2@example.com", 6, 22, Gender.FEMALE, Collections.emptySet());
+        Player player1 = new Player("player1@example.com", 5, 20, Gender.MALE, new HashSet<> ());
+        Player player2 = new Player("player2@example.com", 6, 22, Gender.FEMALE, new HashSet<> ());
         soccer.getPlayers().add(player1);
         soccer.getPlayers().add(player2);
         entityManager.persist(soccer);
@@ -52,7 +54,7 @@ public class SportsRepositoryTests {
     @Test
     public void testFindSportsWithPlayersByName() {
         Sport basketball = new Sport("Basketball", Collections.emptySet());
-        Player player = new Player("player3@example.com", 7, 30, Gender.MALE, Collections.emptySet());
+        Player player = new Player("player3@example.com", 7, 30, Gender.MALE, new HashSet<> ());
         basketball.getPlayers().add(player);
         entityManager.persist(basketball);
         entityManager.persist(player);

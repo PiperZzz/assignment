@@ -6,6 +6,7 @@ import associated.press.java.assignment.model.Sport;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.HashSet;
 
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
@@ -28,8 +29,8 @@ public class PlayersRepositoryTests {
 
     @Test
     public void testFindPlayersWithNoSports() {
-        Player playerWithNoSports = new Player("player@example.com", 5, 25, Gender.MALE, Collections.emptySet());
-        Player playerWithSports = new Player("sporty@example.com", 7, 30, Gender.FEMALE, Collections.emptySet());
+        Player playerWithNoSports = new Player("player@example.com", 5, 25, Gender.MALE, new HashSet<> ());
+        Player playerWithSports = new Player("sporty@example.com", 7, 30, Gender.FEMALE, new HashSet<> ());
         Sport soccer = new Sport("Soccer", Collections.emptySet());
         playerWithSports.getSports().add(soccer);
 
@@ -48,8 +49,8 @@ public class PlayersRepositoryTests {
     public void testFindBySportsName() {
         Sport soccer = new Sport("Soccer", Collections.emptySet());
         Sport basketball = new Sport("Basketball", Collections.emptySet());
-        Player player1 = new Player("player1@example.com", 5, 20, Gender.MALE, Collections.emptySet());
-        Player player2 = new Player("player2@example.com", 6, 22, Gender.FEMALE, Collections.emptySet());
+        Player player1 = new Player("player1@example.com", 5, 20, Gender.MALE, new HashSet<> ());
+        Player player2 = new Player("player2@example.com", 6, 22, Gender.FEMALE, new HashSet<> ());
         player1.getSports().add(soccer);
         player2.getSports().add(soccer);
         player2.getSports().add(basketball);
