@@ -5,7 +5,6 @@ import associated.press.java.assignment.model.Player;
 import associated.press.java.assignment.model.Sport;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

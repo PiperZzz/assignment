@@ -7,7 +7,9 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface SportsRepository extends JpaRepository<Sport, String>{
 
     Optional<Sport> findByName(String name);
