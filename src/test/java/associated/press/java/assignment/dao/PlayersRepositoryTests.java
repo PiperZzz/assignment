@@ -28,6 +28,22 @@ public class PlayersRepositoryTests {
     private TestEntityManager entityManager;
 
     @Test
+    public void testFindPlayersWithNoMatchingGenderLevelAndAge() {
+        Player player1 = new Player("player1@example.com", 5, 20, Gender.MALE, new HashSet<> ());
+        Player player2 = new Player("player2@example.com", 6, 22, Gender.FEMALE, new HashSet<> ());
+        Player player3 = new Player("player3@example.com", 7, 30, Gender.MALE, new HashSet<> ());
+
+        entityManager.persist(player1);
+        entityManager.persist(player2);
+        entityManager.persist(player3);
+        entityManager.flush();
+
+        List<Player> players = playersRepository.findByGenderAndLevelAndAge(Gender.FEMALE, 5, 20);
+        
+        assertThat(players).isEmpty();
+    }
+
+    @Test
     public void testFindPlayersWithNoSports() {
         Player playerWithNoSports = new Player("player@example.com", 5, 25, Gender.MALE, new HashSet<> ());
         Player playerWithSports = new Player("sporty@example.com", 7, 30, Gender.FEMALE, new HashSet<> ());
@@ -65,5 +81,27 @@ public class PlayersRepositoryTests {
 
         assertThat(players.getTotalElements()).isEqualTo(2);
         assertThat(players.getContent()).containsExactlyInAnyOrder(player1, player2);
+    }
+
+    @Test
+    public void testFindBySportsName_NoMatchingPlayers() {
+        Sport soccer = new Sport("Soccer", Collections.emptySet());
+        Sport basketball = new Sport("Basketball", Collections.emptySet());
+        Player player1 = new Player("player1@example.com", 5, 20, Gender.MALE, new HashSet<> ());
+        Player player2 = new Player("player2@example.com", 6, 22, Gender.FEMALE, new HashSet<> ());
+        player1.getSports().add(soccer);
+        player2.getSports().add(soccer);
+        player2.getSports().add(basketball);
+
+        entityManager.persist(soccer);
+        entityManager.persist(basketball);
+        entityManager.persist(player1);
+        entityManager.persist(player2);
+        entityManager.flush();
+
+        Page<Player> players = playersRepository.findBySportsName("NonexistentSport", PageRequest.of(0, 10));
+
+        assertThat(players.getTotalElements()).isEqualTo(0);
+        assertThat(players.getContent()).isEmpty();
     }
 }
