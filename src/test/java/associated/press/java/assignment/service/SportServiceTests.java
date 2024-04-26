@@ -16,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.HashSet;
 import java.util.Optional;
@@ -31,8 +32,8 @@ public class SportServiceTests {
 
     @Test
     public void testGetSportsWithPlayersByNames() {
-        Sport sport = new Sport("Soccer", new HashSet<> ());
-        sport.setPlayers(new HashSet<> (Arrays.asList(new Player("email@example.com", 5, 25, Gender.MALE, new HashSet<>()))));
+        Sport sport = new Sport("Soccer", Collections.emptySet());
+        sport.setPlayers(new HashSet<> (Arrays.asList(new Player("email@example.com", 5, 25, Gender.MALE, Collections.emptySet()))));
         when(sportsRepository.findSportsWithPlayersByName(any())).thenReturn(Arrays.asList(sport));
 
         List<SportDTO> results = sportService.getSportsWithPlayersByNames(Arrays.asList("Soccer"));

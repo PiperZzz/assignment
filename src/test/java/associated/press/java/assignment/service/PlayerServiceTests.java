@@ -7,6 +7,7 @@ import associated.press.java.assignment.enums.Gender;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 
 import static org.mockito.Mockito.*;
@@ -36,7 +37,7 @@ public class PlayerServiceTests {
 
     @Test
     public void testGetPlayersWithNoSportsReturnsNonEmptyList() {
-        List<Player> players = Arrays.asList(new Player("email@example.com", 5, 25, Gender.MALE, new HashSet<>()));
+        List<Player> players = Arrays.asList(new Player("email@example.com", 5, 25, Gender.MALE, Collections.emptySet()));
         when(playersRepository.findPlayersWithNoSports()).thenReturn(players);
         assertFalse(playerService.getPlayersWithNoSports().isEmpty());
     }

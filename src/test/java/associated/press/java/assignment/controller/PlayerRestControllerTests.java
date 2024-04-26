@@ -17,6 +17,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 
 @WebMvcTest(PlayerRestController.class)
@@ -36,7 +37,7 @@ public class PlayerRestControllerTests {
 
     @Test
     public void testGetPlayersWithNoSportsReturnsNonEmpty() throws Exception {
-        when(playerService.getPlayersWithNoSports()).thenReturn(Arrays.asList(new PlayerDTO("email@example.com", 5, 25, Gender.MALE, new HashSet<>())));
+        when(playerService.getPlayersWithNoSports()).thenReturn(Arrays.asList(new PlayerDTO("email@example.com", 5, 25, Gender.MALE, Collections.emptySet())));
         mockMvc.perform(get("/player/no-sports"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
