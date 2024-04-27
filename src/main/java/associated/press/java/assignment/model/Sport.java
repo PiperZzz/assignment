@@ -22,6 +22,6 @@ public class Sport {
     @Id
     private String name;
 
-    @ManyToMany(mappedBy = "sports", cascade = CascadeType.REMOVE)
+    @ManyToMany(mappedBy = "sports", cascade = CascadeType.MERGE)
     private Set<Player> players = new HashSet<>();
 }

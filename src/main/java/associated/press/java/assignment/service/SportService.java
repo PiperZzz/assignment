@@ -33,6 +33,8 @@ public class SportService {
             .orElseThrow(() -> new ResourceNotFoundException("Sport not found with name: " + name));
         
         sport.getPlayers().forEach(player -> player.getSports().remove(sport));
+
+        // (B-4) delete sports and their associated data - deleteing all sport orphans in players will have some performance impact, keep them for manually deletion seems not too bad
         
         sportsRepository.delete(sport);
     }
