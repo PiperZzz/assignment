@@ -36,15 +36,15 @@ public class PlayerRestController {
         return ResponseEntity.ok(players);
     }
 
-    @PutMapping("/{email}/sports")
+    @PutMapping("/sports/{email}")
     public ResponseEntity<?> updatePlayerSports(@PathVariable String email, @RequestBody List<String> sportsNames) {
         if (email == null || email.trim().isEmpty()) {
             return ResponseEntity.badRequest().body("Invalid Path");
         }
 
-        if (sportsNames == null || sportsNames.isEmpty() || sportsNames.contains(null) || sportsNames.contains("")) {
+        if (sportsNames == null || sportsNames.isEmpty() || sportsNames.stream().anyMatch(sportsName -> sportsName == null || sportsName.trim().isEmpty())) {
             return ResponseEntity.badRequest().body("Invalid RequestBody");
-        }
+        }        
 
         try {
             PlayerDTO updatedPlayer = playerService.updatePlayerSports(email, sportsNames);
