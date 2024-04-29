@@ -13,7 +13,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
@@ -22,11 +21,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class PlayerService {
 
-    @Autowired
-    private PlayersRepository  playersRepository;
+    private final PlayersRepository  playersRepository;
+    private final SportsRepository sportsRepository;
 
-    @Autowired
-    private SportsRepository sportsRepository;
+    public PlayerService(PlayersRepository playersRepository, SportsRepository sportsRepository) {
+        this.playersRepository = playersRepository;
+        this.sportsRepository = sportsRepository;
+    }
 
     public List<PlayerDTO> getPlayersWithNoSports() {
         List<Player> players = playersRepository.findPlayersWithNoSports();

@@ -9,15 +9,17 @@ import associated.press.java.assignment.exception.ResourceNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class SportService {
     
-    @Autowired
-    private SportsRepository sportsRepository;
+    private final SportsRepository sportsRepository;
+
+    public SportService(SportsRepository sportsRepository) {
+        this.sportsRepository = sportsRepository;
+    }
 
     public List<SportDTO> getSportsWithPlayersByNames(List<String> names) {
         List<Sport> sports = sportsRepository.findSportsWithPlayersByName(names);

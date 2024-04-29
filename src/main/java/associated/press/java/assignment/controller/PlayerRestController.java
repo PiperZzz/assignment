@@ -22,8 +22,11 @@ import org.springframework.data.domain.Page;
 @RequestMapping("/player")
 public class PlayerRestController {
 
-    @Autowired
-    private PlayerService playerService;
+    private final PlayerService playerService;
+
+    public PlayerRestController(PlayerService playerService) {
+        this.playerService = playerService;
+    }
 
     @GetMapping("/no-sports")
     public ResponseEntity<List<PlayerDTO>> getPlayersWithNoSports() {
